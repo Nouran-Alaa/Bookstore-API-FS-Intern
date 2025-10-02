@@ -7,21 +7,116 @@ const {
   deleteUser,
   getMe,
 } = require("../controllers/userController");
-const { protect, restrictTo } = require("../middleware/auth");
+const { protect } = require("../middleware/auth");
 
-// Get current user profile
+/**
+ * @swagger
+ * /users/me:
+ *   get:
+ *     summary: Get current user profile
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Current user profile
+ */
 router.get("/me", protect, getMe);
 
-// Get all users (admin only)
+/**
+ * @swagger
+ * /users:
+ *   get:
+ *     summary: Get all users (Admin only)
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of all users
+ *       403:
+ *         description: Admin access required
+ */
 router.get("/", protect, getAllUsers);
 
-// Get single user (admin only)
+/**
+ * @swagger
+ * /users/{id}:
+ *   get:
+ *     summary: Get single user (Admin only)
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: User ID
+ *     responses:
+ *       200:
+ *         description: User details
+ *       404:
+ *         description: User not found
+ */
 router.get("/:id", protect, getUser);
 
-// Update user (owner or admin)
+/**
+ * @swagger
+ * /users/{id}:
+ *   put:
+ *     summary: Update user (Owner or Admin)
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: User ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               age:
+ *                 type: number
+ *               email:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: User updated successfully
+ */
 router.put("/:id", protect, updateUser);
 
-// Delete user (admin only)
+/**
+ * @swagger
+ * /users/{id}:
+ *   delete:
+ *     summary: Delete user (Admin only)
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: User ID
+ *     responses:
+ *       200:
+ *         description: User deleted successfully
+ *       403:
+ *         description: Admin access required
+ */
 router.delete("/:id", protect, deleteUser);
 
 module.exports = router;
