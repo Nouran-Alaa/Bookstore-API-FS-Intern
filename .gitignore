@@ -1,0 +1,13 @@
+# dependencies
+node_modules/
+npm-debug.log
+
+# environment
+.env
+
+# docker
+mongo_data/
+
+# logs
+logs
+*.log
