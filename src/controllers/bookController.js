@@ -188,6 +188,11 @@ const buyBook = async (req, res) => {
       });
     }
 
+    // Prevent owner from buying their own book
+    if (book.createdBy.toString() === req.user._id) {
+      return res.status(400).json({ message: "You cannot buy your own book" });
+    }
+
     book.amount -= 1;
     await book.save();
 
