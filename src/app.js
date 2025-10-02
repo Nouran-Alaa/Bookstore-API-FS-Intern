@@ -10,9 +10,11 @@ app.use(cors());
 // Routes
 const authRoutes = require("./routes/authRoutes");
 const bookRoutes = require("./routes/bookRoutes");
+const userRoutes = require("./routes/userRoutes");
 
 app.use("/api/auth", authRoutes);
 app.use("/api/books", bookRoutes);
+app.use("/api/users", userRoutes);
 
 // Health check route
 app.get("/", (req, res) => {
